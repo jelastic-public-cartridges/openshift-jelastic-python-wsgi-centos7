@@ -163,6 +163,7 @@ function _deploy(){
         _setContext $context;
     fi
     _finishDeploy;
+    service cartridge restart 2>>/dev/null 1>>/dev/null;
 }
 
 function _finishDeploy(){
