@@ -174,7 +174,7 @@ function _finishDeploy(){
     local requirements_file=${OPENSHIFT_PYTHON_REQUIREMENTS_PATH:-requirements.txt}
     if [ -f ${OPENSHIFT_REPO_DIR}/ROOT/${requirements_file} ]; then
         echo "Checking for pip dependency listed in ${requirements_file} file.."
-        ( cd $OPENSHIFT_REPO_DIR; pip install -r ${OPENSHIFT_REPO_DIR}/ROOT/${requirements_file} $OPENSHIFT_PYTHON_MIRROR )
+        ( cd $OPENSHIFT_REPO_DIR; pip install -r ${OPENSHIFT_REPO_DIR}/ROOT/${requirements_file} $OPENSHIFT_PYTHON_MIRROR 2>&1 )
     fi
     if [ -f ${OPENSHIFT_REPO_DIR}/ROOT/setup.py ]; then
         echo "Running setup.py script.."
