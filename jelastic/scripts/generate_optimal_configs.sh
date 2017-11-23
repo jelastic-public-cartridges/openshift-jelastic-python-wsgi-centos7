@@ -18,4 +18,4 @@ applyOptimizations(){
         $SED -i "/StartServers/c\StartServers     $START_SERVERS" $DEFAULT_HTTPD_CONFIG;
 }
 
-$GREP -o -P "Jelastic autoconfiguration mark"  $DEFAULT_HTTPD_CONFIG && applyOptimizations;
+$GREP -q -o -P "Jelastic autoconfiguration mark"  $DEFAULT_HTTPD_CONFIG && applyOptimizations;
