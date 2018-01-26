@@ -173,12 +173,12 @@ function _finishDeploy(){
     _updateOwnership $APPWEBROOT;
     local requirements_file=${OPENSHIFT_PYTHON_REQUIREMENTS_PATH:-requirements.txt}
     if [ -f ${OPENSHIFT_REPO_DIR}/ROOT/${requirements_file} ]; then
-        ( cd $OPENSHIFT_REPO_DIR; pip install -r ${OPENSHIFT_REPO_DIR}/ROOT/${requirements_file} $OPENSHIFT_PYTHON_MIRROR 2>&1 )
+        ( cd $OPENSHIFT_REPO_DIR; pip install --no-cache-dir -r ${OPENSHIFT_REPO_DIR}/ROOT/${requirements_file} $OPENSHIFT_PYTHON_MIRROR 2>&1 )
     fi
     if [ -f ${OPENSHIFT_REPO_DIR}/ROOT/setup.py ]; then
         ( cd $OPENSHIFT_REPO_DIR; python ${OPENSHIFT_REPO_DIR}/ROOT/setup.py develop $OPENSHIFT_PYTHON_MIRROR )
     fi
-    pip install --upgrade pip
+    pip install --upgrade --no-cache-dir pip
     _clearCache;
 }
 

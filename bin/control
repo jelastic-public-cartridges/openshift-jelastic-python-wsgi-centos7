@@ -56,7 +56,7 @@ function start() {
     fi
     local requirements_file=${OPENSHIFT_PYTHON_REQUIREMENTS_PATH:-requirements.txt}
     if [ -f ${OPENSHIFT_REPO_DIR}/ROOT/${requirements_file} ]; then
-        ( cd $OPENSHIFT_REPO_DIR; pip install --log /opt/repo/logs/pip.log -r ${OPENSHIFT_REPO_DIR}/ROOT/${requirements_file} 2>&1 )
+        ( cd $OPENSHIFT_REPO_DIR; pip install --log /opt/repo/logs/pip.log --no-cache-dir -r ${OPENSHIFT_REPO_DIR}/ROOT/${requirements_file} 2>&1 )
     fi
     if [ -f ${OPENSHIFT_REPO_DIR}/ROOT/setup.py ]; then
         ( cd $OPENSHIFT_REPO_DIR; python ${OPENSHIFT_REPO_DIR}/ROOT/setup.py develop )
@@ -131,10 +131,10 @@ function tidy() {
 }
 
 function build() {
-    pip install --upgrade pip &>/dev/null;
+    pip install --upgrade --no-cache-dir pip &>/dev/null;
     local requirements_file=${OPENSHIFT_PYTHON_REQUIREMENTS_PATH:-requirements.txt}
     if [ -f ${OPENSHIFT_REPO_DIR}/ROOT/${requirements_file} ]; then
-        ( cd $OPENSHIFT_REPO_DIR; pip install --log /opt/repo/logs/pip.log -r ${OPENSHIFT_REPO_DIR}/ROOT/${requirements_file} 2>&1 1> /dev/null )
+        ( cd $OPENSHIFT_REPO_DIR; pip install --log /opt/repo/logs/pip.log --no-cache-dir -r ${OPENSHIFT_REPO_DIR}/ROOT/${requirements_file} 2>&1 1> /dev/null )
     fi
 
     if [ -f ${OPENSHIFT_REPO_DIR}/ROOT/setup.py ]; then
