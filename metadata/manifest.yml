@@ -46,7 +46,3 @@ Endpoints:
   Private-Port-Name: EXIM_PORT
   Private-Port:      7979
   Public-Port-Name:  EXIM_PROXY_PORT
-- Private-IP-Name:   SSH_IP
-  Private-Port-Name: SSH_PORT
-  Private-Port:      22
-  Public-Port-Name:  SSH_PROXY_PORT
