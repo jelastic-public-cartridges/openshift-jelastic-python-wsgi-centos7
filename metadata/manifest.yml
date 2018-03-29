@@ -34,15 +34,15 @@ Scaling:
   Min: 1
   Max: -1
 Endpoints:
-- Private-IP-Name: IP
+- Private-IP-Name:   IP
   Private-Port-Name: PORT
-  Private-Port: 80
-  Public-Port-Name: PROXY_PORT
-- Private-IP-Name: HTTPS_IP
+  Private-Port:      80
+  Public-Port-Name:  PROXY_PORT
+- Private-IP-Name:   HTTPS_IP
   Private-Port-Name: HTTPS_PORT
-  Private-Port: 443
-  Public-Port-Name: HTTPS_PROXY_PORT
-- Private-IP-Name: EXIM_IP
+  Private-Port:      443
+  Public-Port-Name:  HTTPS_PROXY_PORT
+- Private-IP-Name:   EXIM_IP
   Private-Port-Name: EXIM_PORT
-  Private-Port: 7979
-  Public-Port-Name: EXIM_PROXY_PORT
+  Private-Port:      7979
+  Public-Port-Name:  EXIM_PROXY_PORT
