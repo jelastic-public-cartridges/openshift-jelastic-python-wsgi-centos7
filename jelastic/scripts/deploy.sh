@@ -23,6 +23,7 @@ function getPackageName() {
         [ -f "${package_path}/${package_name}" ] || { writeJSONResponseErr "result=>4078" "message=>Error loading file from URL"; die -q; }
     else
         ensureFileCanBeDownloaded $package_url;
+        [ ! -d "$DOWNLOADS" ] && { mkdir -p "$DOWNLOADS"; }
         $WGET --no-check-certificate --content-disposition --directory-prefix="$DOWNLOADS" $package_url >> $ACTIONS_LOG 2>&1 || { writeJSONResponseErr "result=>4078" "message=>Error loading file from URL"; die -q; }
         package_name="$(ls ${DOWNLOADS})";
         package_path=${DOWNLOADS};
@@ -151,7 +152,6 @@ function _deploy(){
     package_url=$1;
     context=$2;
     ext=$3;
-    [ ! -d "$DOWNLOADS" ] && { mkdir -p "$DOWNLOADS"; }
     _clearCache;
     prepareContext ${context} ;
     getPackageName;
@@ -166,7 +166,12 @@ function _deploy(){
         _setContext $context;
     fi
     _finishDeploy;
-    service cartridge restart 2>>/dev/null 1>>/dev/null;
+    if [ "$UID" != '0' ]; then
+        groups|grep -qw ssh-access && SUDO="sudo" || SUDO=""
+    else
+        SUDO=""
+    fi
+    ${SUDO} service cartridge restart 2>>/dev/null 1>>/dev/null;
 }
 
 function _finishDeploy(){
