@@ -2,7 +2,7 @@
 
 source /etc/jelastic/environment;
 
-sudo setcap 'cap_net_bind_service=+ep' /usr/sbin/httpd 2>&1
+sudo setcap 'cap_net_bind_service=+ep' /usr/sbin/httpd 2>/dev/null
 
 source $OPENSHIFT_CARTRIDGE_SDK_BASH
 source "${OPENSHIFT_PYTHON_DIR}/versions/${OPENSHIFT_PYTHON_VERSION}/lib/create-virtenv"
