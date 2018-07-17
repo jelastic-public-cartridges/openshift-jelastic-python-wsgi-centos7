@@ -4,16 +4,15 @@ source $OPENSHIFT_CARTRIDGE_SDK_BASH
 
 mkdir -p ${OPENSHIFT_PYTHON_DIR}/etc;
 
+echo "jelastic ALL=(ALL) NOPASSWD: /usr/sbin/setcap " >> /etc/sudoers;
+
 /sbin/iptables -t nat -D PREROUTING -p tcp -m tcp --dport 443 -j REDIRECT --to-ports 8743 &>/dev/null
 /sbin/iptables -t nat -D PREROUTING -p tcp -m tcp --dport 80 -j REDIRECT --to-ports 8080 &>/dev/null
-/sbin/ip6tables -t nat -D PREROUTING -p tcp -m tcp --dport 80 -j REDIRECT --to-ports 8080 &>/dev/null
-/sbin/ip6tables -t nat -D PREROUTING -p tcp -m tcp --dport 443 -j REDIRECT --to-ports 8743 &>/dev/null
-service iptables save
+service iptables save &>/dev/null
 
 [ -d /opt/jelastic-python27/lib/python2.7/site-packages/yum ] && rm -rf /opt/jelastic-python27/lib/python2.7/site-packages/yum;
 cp -r /usr/lib/python2.7/site-packages/yum /opt/jelastic-python27/lib/python2.7/site-packages/;
 
-echo "jelastic ALL=(ALL) NOPASSWD: /usr/sbin/setcap " >> /etc/sudoers;
 rm -f /etc/httpd/conf/httpd.conf;
 ln -sf /opt/repo/versions/2.4/etc/conf/httpd_nolog.conf /etc/httpd/conf/httpd.conf;
 sed -i '/ERRORS_TO_KBASE_ARTICLES.iteritems/d' /usr/share/yum-cli/output.py
@@ -23,3 +22,7 @@ yum -y install postgresql95-devel-9.5.2 libmemcached-devel &>/dev/null
 
 mv ${OPENSHIFT_PYTHON_DIR}/usr/lib64/apache/* /usr/lib64/mysql; strip /usr/lib64/mysql/*; rm -rf ${OPENSHIFT_PYTHON_DIR}/usr/lib64/apache/;
 chown root:root /usr/lib64/mysql/*
+
+/sbin/ip6tables -t nat -D PREROUTING -p tcp -m tcp --dport 80 -j REDIRECT --to-ports 8080 &>/dev/null
+/sbin/ip6tables -t nat -D PREROUTING -p tcp -m tcp --dport 443 -j REDIRECT --to-ports 8743 &>/dev/null
+service ip6tables save &>/dev/null
